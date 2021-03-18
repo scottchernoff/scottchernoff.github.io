@@ -8,6 +8,28 @@
   <title>Document</title>
   <script type="text/javascript">
     const webIntegrationId = "tFQaM7rTu7oqXzIwTu0CXbKUNCkZ60KU";
+    function login() {
+      function isLoggedIn() {
+        return fetch("https://nzmetlu1lhaz44c.us.qlikcloud.com/api/v1/users/me", {
+          method: 'GET',
+          mode: 'cors',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            'qlik-web-integration-id': webIntegrationId,
+          },
+        }).then(response => {
+          return response.status === 200;
+        });
+      }
+      return isLoggedIn().then(loggedIn => {
+        if (!loggedIn) {
+          // check login
+            window.location.href = "https://nzmetlu1lhaz44c.us.qlikcloud.com/login?qlik-web-integration-id=" + webIntegrationId + "&returnto=" + location.href;          
+        }
+      });
+    }
+	login()
   </script>
 </head>
 
